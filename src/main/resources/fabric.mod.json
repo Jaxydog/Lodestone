@@ -7,7 +7,8 @@
     "contributors": [ ],
     "contact": {
         "sources": "https://github.com/Jaxydog/Lodestone",
-        "issues": "https://github.com/Jaxydog/Lodestone/issues"
+        "issues": "https://github.com/Jaxydog/Lodestone/issues",
+        "homepage": "https://modrinth.com/mod/lodestone-lib"
     },
 
     "id": "lodestone",

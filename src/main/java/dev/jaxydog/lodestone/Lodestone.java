@@ -65,6 +65,15 @@ public class Lodestone implements ModInitializer {
      */
     private static final Map<Class<? extends Loaded>, Queue<? extends Loaded>> QUEUE = new Object2ObjectOpenHashMap<>();
     /**
+     * A map containing queues of to-be-loaded mod identifiers.
+     * <p>
+     * This is only used during mod initialization, in cases where an environment is loaded before it was registered.
+     *
+     * @since 1.0.0
+     */
+    private static final Map<Class<? extends Loaded>, Queue<String>> LOADED = new Object2ObjectOpenHashMap<>();
+
+    /**
      * Tracks whether the mod has finished loading all environment instances.
      *
      * @since 1.0.0
@@ -72,19 +81,41 @@ public class Lodestone implements ModInitializer {
     private static final AtomicBoolean LOADED_ENVIRONMENTS = new AtomicBoolean(false);
 
     /**
+     * Creates and registers a new environment for the given {@link Loaded} interface.
+     * <p>
+     * This is used to implement custom {@link Loaded} interfaces.
+     *
+     * @param type The {@link Loaded} interface.
+     * @param load A method that loads the given value.
+     * @param <T> The type of the {@link Loaded} interface.
+     *
+     * @since 1.0.0
+     */
+    public static <T extends Loaded> void createEnvironment(Class<? extends T> type, Consumer<? super T> load) {
+        try {
+            REGISTRY.register(new LoaderEnvironment<>(type, load));
+        } catch (IllegalArgumentException exception) {
+            LOGGER.error(exception.getLocalizedMessage());
+        }
+    }
+
+    /**
      * Registers a value for automatic registration.
      *
      * @param type The {@link Loaded} interface.
      * @param value The value to be registered.
-     * @param queueIfMissing Whether values should be queued if the environment is missing.
      * @param <T> The type of the {@link Loaded} interface.
      *
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    private static <T extends Loaded> void register(Class<? extends T> type, T value, boolean queueIfMissing) {
-        if (!queueIfMissing || REGISTRY.has(type)) {
-            REGISTRY.addEntrypoint(type, value);
+    public static <T extends Loaded> void register(Class<? extends T> type, T value) {
+        if (LOADED_ENVIRONMENTS.get()) {
+            try {
+                REGISTRY.addEntrypoint(type, value);
+            } catch (IllegalArgumentException exception) {
+                LOGGER.error(exception.getLocalizedMessage());
+            }
         } else {
             ((Queue<T>) QUEUE.computeIfAbsent(type, t -> new ArrayDeque<T>(1))).add(value);
         }
@@ -101,9 +132,7 @@ public class Lodestone implements ModInitializer {
      */
     @SafeVarargs
     public static <T extends Loaded> void register(Class<? extends T> type, T... values) {
-        final boolean queueIfMissing = !LOADED_ENVIRONMENTS.get();
-
-        for (final T value : values) register(type, value, queueIfMissing);
+        for (final T value : values) register(type, value);
     }
 
     /**
@@ -116,9 +145,7 @@ public class Lodestone implements ModInitializer {
      * @since 1.0.0
      */
     public static <T extends Loaded> void register(Class<? extends T> type, Iterator<? extends T> values) {
-        final boolean queueIfMissing = !LOADED_ENVIRONMENTS.get();
-
-        values.forEachRemaining(value -> register(type, value, queueIfMissing));
+        values.forEachRemaining(value -> register(type, value));
     }
 
     /**
@@ -131,24 +158,67 @@ public class Lodestone implements ModInitializer {
      * @since 1.0.0
      */
     public static <T extends Loaded> void register(Class<? extends T> type, Collection<? extends T> values) {
-        final boolean queueIfMissing = !LOADED_ENVIRONMENTS.get();
-
-        values.forEach(value -> register(type, value, queueIfMissing));
+        values.forEach(value -> register(type, value));
     }
 
     /**
-     * Creates and registers a new environment for the given {@link Loaded} interface.
-     * <p>
-     * This is used to implement custom {@link Loaded} interfaces.
+     * Loads the target environment for the given mod identifier.
      *
      * @param type The {@link Loaded} interface.
-     * @param load A method that loads the given value.
+     * @param modId The requesting mod's identifier.
      * @param <T> The type of the {@link Loaded} interface.
      *
      * @since 1.0.0
      */
-    public static <T extends Loaded> void createEnvironment(Class<? extends T> type, Consumer<? super T> load) {
-        REGISTRY.register(new LoaderEnvironment<>(type, load));
+    public static <T extends Loaded> void load(Class<? extends T> type, String modId) {
+        if (LOADED_ENVIRONMENTS.get()) {
+            try {
+                REGISTRY.loadEntrypoints(type, modId);
+            } catch (IllegalArgumentException exception) {
+                LOGGER.error(exception.getLocalizedMessage());
+            }
+        } else {
+            LOADED.computeIfAbsent(type, t -> new ArrayDeque<>(1)).add(modId);
+        }
+    }
+
+    /**
+     * Loads the target environment for the given mod identifier.
+     *
+     * @param type The {@link Loaded} interface.
+     * @param modIds The requesting mod's identifiers.
+     * @param <T> The type of the {@link Loaded} interface.
+     *
+     * @since 1.0.0
+     */
+    public static <T extends Loaded> void load(Class<? extends T> type, String... modIds) {
+        for (final String modId : modIds) load(type, modId);
+    }
+
+    /**
+     * Loads the target environment for the given mod identifier.
+     *
+     * @param type The {@link Loaded} interface.
+     * @param modIds The requesting mod's identifiers.
+     * @param <T> The type of the {@link Loaded} interface.
+     *
+     * @since 1.0.0
+     */
+    public static <T extends Loaded> void load(Class<? extends T> type, Iterator<String> modIds) {
+        modIds.forEachRemaining(modId -> load(type, modId));
+    }
+
+    /**
+     * Loads the target environment for the given mod identifier.
+     *
+     * @param type The {@link Loaded} interface.
+     * @param modIds The requesting mod's identifiers.
+     * @param <T> The type of the {@link Loaded} interface.
+     *
+     * @since 1.0.0
+     */
+    public static <T extends Loaded> void load(Class<? extends T> type, Collection<String> modIds) {
+        modIds.forEach(modId -> load(type, modId));
     }
 
     @Override
@@ -168,6 +238,10 @@ public class Lodestone implements ModInitializer {
         LOADED_ENVIRONMENTS.set(true);
 
         QUEUE.forEach(Lodestone::register);
+        QUEUE.clear();
+
+        LOADED.forEach(Lodestone::load);
+        LOADED.clear();
     }
 
 }

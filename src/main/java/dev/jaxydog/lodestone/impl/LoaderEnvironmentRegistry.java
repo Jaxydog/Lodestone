@@ -19,7 +19,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -94,24 +93,6 @@ public final class LoaderEnvironmentRegistry {
      */
     public <T extends Loaded> boolean has(Class<? extends T> type) {
         return this.entries.containsKey(type);
-    }
-
-    /**
-     * Returns the {@link LoaderEnvironment} instance associated with the given {@link Loaded} interface, if it was
-     * previously registered.
-     *
-     * @param type The expected {@link Loaded} interface.
-     * @param <T> The type of the associated {@link Loaded} interface.
-     *
-     * @return The {@link LoaderEnvironment} instance, if it exists.
-     *
-     * @since 1.0.0
-     */
-    @SuppressWarnings("unchecked")
-    public <T extends Loaded> Optional<LoaderEnvironment<T>> get(Class<? extends T> type) {
-        if (!this.has(type)) return Optional.empty();
-
-        return Optional.of((LoaderEnvironment<T>) this.entries.get(type).environment());
     }
 
     /**

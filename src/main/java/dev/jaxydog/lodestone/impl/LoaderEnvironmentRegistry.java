@@ -17,6 +17,7 @@ package dev.jaxydog.lodestone.impl;
 import com.google.common.collect.ImmutableSet;
 import dev.jaxydog.lodestone.api.Loaded;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import java.util.Map;
@@ -125,8 +126,11 @@ public final class LoaderEnvironmentRegistry {
     ) throws IllegalArgumentException {
         if (this.has(type)) {
             final String modId = entrypoint.getLoaderId().getNamespace();
+            final Set<T> set = (Set<T>) this.entries.get(type)
+                .entrypoints()
+                .computeIfAbsent(modId, i -> new ObjectArraySet<>());
 
-            ((Set<T>) this.entries.get(type).entrypoints().get(modId)).add(entrypoint);
+            set.add(entrypoint);
         } else {
             throw new IllegalArgumentException("An environment has not been registered for '%s'".formatted(type.getSimpleName()));
         }

@@ -133,7 +133,6 @@ lodestone_version = 1.0.0
 // build.gradle
 
 repositories {
-    mavenCentral()
     maven { url 'https://jitpack.io' }
 }
 

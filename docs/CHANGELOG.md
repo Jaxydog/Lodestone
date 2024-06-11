@@ -20,3 +20,11 @@ The initial release of Lodestone.
 - Added the `LoaderEnvironment` class.
 - Added the `LoaderEnvironmentRegistry` class.
 - Added a basic test mod.
+
+# Minor Patch 1.0.1
+
+Fixes JitPack builds.
+
+## Internal Changes
+
+- Added `jitpack.yml` to configure the Java version.

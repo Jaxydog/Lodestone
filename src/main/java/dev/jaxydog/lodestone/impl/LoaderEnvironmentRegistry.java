@@ -116,6 +116,29 @@ public final class LoaderEnvironmentRegistry {
     }
 
     /**
+     * Adds an entrypoint to the {@link LoaderEnvironmentRegistry} instance associated with the given {@link Loaded}
+     * interface.
+     *
+     * @param type The expected {@link Loaded} interface.
+     * @param entrypoint The entrypoint.
+     * @param <T> The type of the associated {@link Loaded} interface.
+     *
+     * @throws IllegalArgumentException If the given {@link Loaded} interface does not have a registered
+     * {@link LoaderEnvironment}.
+     * @since 1.0.0
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends Loaded> void addEntrypoint(
+        Class<? extends T> type, T entrypoint
+    ) throws IllegalArgumentException {
+        if (this.has(type)) {
+            ((Set<T>) this.entries.get(type).entrypoints()).add(entrypoint);
+        } else {
+            throw new IllegalArgumentException("An environment has not been registered for '%s'".formatted(type.getSimpleName()));
+        }
+    }
+
+    /**
      * Loads the {@link LoaderEnvironment} instance associated with the given {@link Loaded} interface.
      * <p>
      * If the defined {@link LoaderEnvironment#loadValue(Loaded)} method throws, the thrown error will be bubbled up.
@@ -127,7 +150,7 @@ public final class LoaderEnvironmentRegistry {
      * {@link LoaderEnvironment}.
      * @since 1.0.0
      */
-    public <T extends Loaded> void load(Class<? extends T> type) throws IllegalArgumentException {
+    public <T extends Loaded> void loadEntrypoints(Class<? extends T> type) throws IllegalArgumentException {
         if (this.has(type)) {
             this.entries.get(type).loadEntrypoints();
         } else {
@@ -169,6 +192,8 @@ public final class LoaderEnvironmentRegistry {
             for (final T entrypoint : this.entrypoints()) {
                 this.environment().loadValue(entrypoint);
             }
+
+            this.entrypoints().clear();
         }
 
     }

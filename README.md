@@ -7,7 +7,96 @@ An automatic content loader for Fabric mods.
 ### Usage
 
 In order to use Lodestone directly, please ensure that
-you [add it as a dependency for your mod](#depending-on-lodestone).
+you [add it as a dependency for your mod](#depending-on-lodestone). This mod does not add any content by itself.
+
+Lodestone provides basic interfaces and APIs for easily registering modded content during initialization. The most
+important type provided is the `Loaded` interface, which the mod is built around. For a basic example, see the
+basic [test mod](https://github.com/Jaxydog/Lodestone/tree/main/src/test).
+
+To create an automatically registered type, simply implement the target environment's associated interface.
+
+```java
+/** An item that is loaded at runtime. */
+public class LoadedItem extends Item implements CommonLoaded {
+
+    // Required for all instances of `Loaded`. Allow Lodestone to sort registered values by mod identifier.
+    @Override
+    public Identifier getLoaderId() {
+        return Identifier.of("your_mod", "your_item");
+    }
+
+    // A function that registers the value at runtime.
+    @Override
+    public void loadCommon() {
+        Registry.register(Registries.ITEM, this.getLoaderId(), this);
+    }
+
+}
+```
+
+Each mod environment has its own dedicated interface:
+
+- `CommonLoaded` loads the value on the "common" environment, meaning both the client *and* the server.
+- `ClientLoaded` *only* loads the value on the client instance.
+- `ServerLoaded` *only* loads the value on the server instance.
+- `DataGenerating` *only* loads the value during data generation.
+
+These are intended to be used within each mod initializer to load it properly.
+
+```java
+public class YourMod implements ModInitializer {
+
+    public static final LoadedItem YOUR_ITEM = new LoadedItem(new Settings());
+
+    @Override
+    public void onInitialize() {
+        // Registers this item for later loading.
+        Lodestone.register(CommonLoaded.class, YOUR_ITEM);
+
+        // Which is then done here.
+        Lodestone.load(CommonLoaded.class, "your_mod");
+    }
+
+}
+```
+
+Lodestone also provides an abstract class and two annotations for automatic registration of values.
+
+```java
+public final class ItemLoader extends AutoLoader {
+
+    public static final LoadedItem ITEM_1 = new LoadedItem("item_1", new Settings());
+    public static final LoadedItem ITEM_2 = new LoadedItem("item_2", new Settings());
+    public static final LoadedItem ITEM_3 = new LoadedItem("item_3", new Settings());
+    public static final LoadedItem ITEM_4 = new LoadedItem("item_4", new Settings());
+    public static final LoadedItem ITEM_5 = new LoadedItem("item_5", new Settings());
+
+    @Override
+    public Identifier getLoaderId() {
+        return Identifier.of("your_mod", "items");
+    }
+
+}
+```
+
+This is then registered in a very similar way.
+
+```java
+public class YourMod implements ModInitializer {
+
+    public static final ItemLoader ITEMS = new ItemLoader();
+
+    @Override
+    public void onInitialize() {
+        // Registers all items for later loading.
+        ITEMS.register();
+
+        // Which is then done here.
+        Lodestone.load(CommonLoaded.class, "your_mod");
+    }
+
+}
+```
 
 ### Installation
 
@@ -17,11 +106,6 @@ on [Modrinth](https://modrinth.com/mod/lodestone-lib), if that is preferred, onc
 
 Once downloaded, the JAR file must be placed within your client's `mods` directory, and the game should be run using
 the [Fabric Loader](https://fabricmc.net/).
-
-Lodestone requires the following mods to run properly, which, if not present along-side it, will prevent the game from
-launching:
-
-- [Fabric API](https://modrinth.com/mod/fabric-api)
 
 Alternatively, you may build Lodestone from its source code by running the following commands in order. To build
 from Lodestone's source code, you must have both Java 21 and Git installed.
@@ -36,7 +120,7 @@ The compiled JAR files will be located within the `./build/libs/` directory.
 
 ### Depending on Lodestone
 
-Lodestone's main purpose is to be used as a library for other mods. If you would like to depend on Lodestone for your
+Lodestone's sole purpose is to be used as a library for other mods. If you would like to depend on Lodestone for your
 Fabric mod, add the following to your Gradle manifest:
 
 ```properties

@@ -16,7 +16,6 @@ package dev.jaxydog.lodestone.impl;
 
 import dev.jaxydog.lodestone.api.Loaded;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 import java.util.Map;
@@ -132,7 +131,9 @@ public final class LoaderEnvironmentRegistry {
         Class<? extends T> type, T entrypoint
     ) throws IllegalArgumentException {
         if (this.has(type)) {
-            ((Set<T>) this.entries.get(type).entrypoints()).add(entrypoint);
+            final String modId = entrypoint.getLoaderId().getNamespace();
+
+            ((Set<T>) this.entries.get(type).entrypoints().get(modId)).add(entrypoint);
         } else {
             throw new IllegalArgumentException("An environment has not been registered for '%s'".formatted(type.getSimpleName()));
         }
@@ -144,15 +145,18 @@ public final class LoaderEnvironmentRegistry {
      * If the defined {@link LoaderEnvironment#loadValue(Loaded)} method throws, the thrown error will be bubbled up.
      *
      * @param type The expected {@link Loaded} interface.
+     * @param modId The loaded mod's identifier.
      * @param <T> The type of the associated {@link Loaded} interface.
      *
      * @throws IllegalArgumentException If the given {@link Loaded} interface does not have a registered
      * {@link LoaderEnvironment}.
      * @since 1.0.0
      */
-    public <T extends Loaded> void loadEntrypoints(Class<? extends T> type) throws IllegalArgumentException {
+    public <T extends Loaded> void loadEntrypoints(
+        Class<? extends T> type, String modId
+    ) throws IllegalArgumentException {
         if (this.has(type)) {
-            this.entries.get(type).loadEntrypoints();
+            this.entries.get(type).loadEntrypoints(modId);
         } else {
             throw new IllegalArgumentException("An environment has not been registered for '%s'".formatted(type.getSimpleName()));
         }
@@ -168,7 +172,7 @@ public final class LoaderEnvironmentRegistry {
      * @author Jaxydog
      * @since 1.0.0
      */
-    private record Entry<T extends Loaded>(LoaderEnvironment<T> environment, Set<T> entrypoints) {
+    private record Entry<T extends Loaded>(LoaderEnvironment<T> environment, Map<String, Set<T>> entrypoints) {
 
         /**
          * Creates a new, empty {@link Entry}.
@@ -178,22 +182,26 @@ public final class LoaderEnvironmentRegistry {
          * @since 1.0.0
          */
         public Entry(LoaderEnvironment<T> environment) {
-            this(environment, new ObjectArraySet<>());
+            this(environment, new Object2ObjectOpenHashMap<>());
         }
 
         /**
-         * Loads all associated entrypoints.
+         * Loads all associated entrypoints for the given mod identifier.
          * <p>
          * If the defined {@link LoaderEnvironment#loadValue(Loaded)} method throws, the error will be bubbled up.
          *
+         * @param modId The loaded mod's identifier.
+         *
          * @since 1.0.0
          */
-        public void loadEntrypoints() {
-            for (final T entrypoint : this.entrypoints()) {
+        public void loadEntrypoints(String modId) {
+            if (!this.entrypoints().containsKey(modId)) return;
+
+            for (final T entrypoint : this.entrypoints().get(modId)) {
                 this.environment().loadValue(entrypoint);
             }
 
-            this.entrypoints().clear();
+            this.entrypoints().get(modId).clear();
         }
 
     }

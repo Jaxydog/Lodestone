@@ -101,8 +101,8 @@ public class YourMod implements ModInitializer {
 ### Installation
 
 Lodestone's most up-to-date JAR file may be downloaded from
-its [GitHub Releases page](https://github.com/Jaxydog/Lodestone/releases). This mod will also be available
-on [Modrinth](https://modrinth.com/mod/lodestone-lib), if that is preferred, once it is more feature-complete.
+its [GitHub Releases page](https://github.com/Jaxydog/Lodestone/releases). This mod is also be available
+on [Modrinth](https://modrinth.com/mod/lodestone-lib), if that is preferred.
 
 Once downloaded, the JAR file must be placed within your client's `mods` directory, and the game should be run using
 the [Fabric Loader](https://fabricmc.net/).

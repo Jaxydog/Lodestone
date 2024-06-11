@@ -21,6 +21,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import org.jetbrains.annotations.ApiStatus.Internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,6 +98,18 @@ public class Lodestone implements ModInitializer {
         } catch (IllegalArgumentException exception) {
             LOGGER.error(exception.getLocalizedMessage());
         }
+    }
+
+    /**
+     * Returns a set containing all registered interface instances.
+     *
+     * @return A set containing all registered interface instances.
+     *
+     * @since 0.1.0
+     */
+    @Internal
+    public static Set<Class<? extends Loaded>> getInterfaces() {
+        return REGISTRY.getInterfaces();
     }
 
     /**

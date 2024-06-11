@@ -14,6 +14,7 @@
 
 package dev.jaxydog.lodestone.impl;
 
+import com.google.common.collect.ImmutableSet;
 import dev.jaxydog.lodestone.api.Loaded;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -93,6 +94,17 @@ public final class LoaderEnvironmentRegistry {
      */
     public <T extends Loaded> boolean has(Class<? extends T> type) {
         return this.entries.containsKey(type);
+    }
+
+    /**
+     * Returns a set containing all registered interface instances.
+     *
+     * @return A set containing all registered interface instances.
+     *
+     * @since 0.1.0
+     */
+    public Set<Class<? extends Loaded>> getInterfaces() {
+        return ImmutableSet.copyOf(this.entries.keySet());
     }
 
     /**

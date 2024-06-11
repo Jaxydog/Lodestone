@@ -32,6 +32,28 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
 
+sourceSets {
+    test {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
+}
+
+loom {
+    runs {
+        testClient {
+            client()
+            name = "Test Client"
+            source sourceSets.test
+        }
+        testServer {
+            server()
+            name = "Test Server"
+            source sourceSets.test
+        }
+    }
+}
+
 processResources {
     inputs.property "version", project.version
 

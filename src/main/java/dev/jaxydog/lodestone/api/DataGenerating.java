@@ -22,7 +22,7 @@ package dev.jaxydog.lodestone.api;
  * @author Jaxydog
  * @since 1.0.0
  */
-public non-sealed interface DataGenerating extends Loaded {
+public interface DataGenerating extends Loaded {
 
     /**
      * Loads this value at runtime.

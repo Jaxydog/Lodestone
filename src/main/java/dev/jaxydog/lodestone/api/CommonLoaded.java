@@ -25,7 +25,7 @@ package dev.jaxydog.lodestone.api;
  * @see ServerLoaded
  * @since 1.0.0
  */
-public non-sealed interface CommonLoaded extends Loaded {
+public interface CommonLoaded extends Loaded {
 
     /**
      * Loads this value at runtime.

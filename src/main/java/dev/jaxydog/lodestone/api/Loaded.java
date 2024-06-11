@@ -28,7 +28,7 @@ import net.minecraft.util.Identifier;
  * @see DataGenerating
  * @since 1.0.0
  */
-public sealed interface Loaded permits ClientLoaded, CommonLoaded, DataGenerating, ServerLoaded {
+public interface Loaded {
 
     /**
      * Returns this value's associated identifier, typically used during the automatic loading process.

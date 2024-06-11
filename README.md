@@ -65,11 +65,15 @@ Lodestone also provides an abstract class and two annotations for automatic regi
 ```java
 public final class ItemLoader extends AutoLoader {
 
+    @LoadingPriority(-1) // Controls the loading order. In this case, this loads last.
     public static final LoadedItem ITEM_1 = new LoadedItem("item_1", new Settings());
     public static final LoadedItem ITEM_2 = new LoadedItem("item_2", new Settings());
     public static final LoadedItem ITEM_3 = new LoadedItem("item_3", new Settings());
     public static final LoadedItem ITEM_4 = new LoadedItem("item_4", new Settings());
     public static final LoadedItem ITEM_5 = new LoadedItem("item_5", new Settings());
+
+    @IgnoreLoading({ }) // Prevents this value from being loaded.
+    public static final LoadedItem NULL = null;
 
     @Override
     public Identifier getLoaderId() {

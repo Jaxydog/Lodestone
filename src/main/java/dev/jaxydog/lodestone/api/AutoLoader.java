@@ -77,7 +77,22 @@ public abstract class AutoLoader implements Loaded {
             if (!field.accessFlags().contains(AccessFlag.FINAL)) continue;
 
             // Ensure the field is an instance of the given type.
-            if (!type.isAssignableFrom(field.getType())) continue;
+            if (!type.isAssignableFrom(field.getType())) {
+                // Make sure we invoke internal autoloader instances.
+                if (AutoLoader.class.isAssignableFrom(field.getType())) {
+                    try {
+                        ((AutoLoader) field.get(null)).iterate(type, consumer);
+                    } catch (IllegalAccessException | IllegalArgumentException exception) {
+                        final String className = this.getClass().getSimpleName();
+                        final String fieldName = field.getName();
+                        final String message = exception.getLocalizedMessage();
+
+                        this.logger.error("Unable to access loader '{}#{}': {}", className, fieldName, message);
+                    }
+                }
+
+                continue;
+            }
 
             // Ensure the field should not be ignored.
             if (field.isAnnotationPresent(IgnoreLoading.class)) {

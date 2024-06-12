@@ -76,6 +76,14 @@ public abstract class AutoLoader implements Loaded {
             if (!field.accessFlags().contains(AccessFlag.STATIC)) continue;
             if (!field.accessFlags().contains(AccessFlag.FINAL)) continue;
 
+            // Ensure the field should not be ignored.
+            if (field.isAnnotationPresent(IgnoreLoading.class)) {
+                final IgnoreLoading annotation = field.getAnnotation(IgnoreLoading.class);
+                final Set<Class<? extends Loaded>> types = Set.of(annotation.value());
+
+                if (types.isEmpty() || types.contains(type)) continue;
+            }
+
             // Ensure the field is an instance of the given type.
             if (!type.isAssignableFrom(field.getType())) {
                 // Make sure we invoke internal autoloader instances.
@@ -92,14 +100,6 @@ public abstract class AutoLoader implements Loaded {
                 }
 
                 continue;
-            }
-
-            // Ensure the field should not be ignored.
-            if (field.isAnnotationPresent(IgnoreLoading.class)) {
-                final IgnoreLoading annotation = field.getAnnotation(IgnoreLoading.class);
-                final Set<Class<? extends Loaded>> types = Set.of(annotation.value());
-
-                if (types.isEmpty() || types.contains(type)) continue;
             }
 
             try {

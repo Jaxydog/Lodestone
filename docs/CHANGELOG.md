@@ -1,3 +1,11 @@
+# Minor Patch 1.2.1
+
+Reduce unnecessary registrations.
+
+## Internal Changes
+
+- Only register DataGenerating environment if the data generator is actually enabled.
+
 # Minor Release 1.2.0
 
 Better enforce loader restrictions.

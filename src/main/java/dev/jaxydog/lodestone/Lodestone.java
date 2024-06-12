@@ -37,6 +37,7 @@ import java.util.function.Consumer;
  * @author Jaxydog
  * @since 1.0.0
  */
+@SuppressWarnings("unused") // These are API methods.
 public final class Lodestone implements ModInitializer {
 
     /**

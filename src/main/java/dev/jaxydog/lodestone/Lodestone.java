@@ -242,7 +242,7 @@ public final class Lodestone implements ModInitializer {
             .map(Class::getSimpleName)
             .toList();
 
-        LOGGER.info("{} {} loaded with {} interfaces: {}", name, version, types.size(), String.join(", ", bundled));
+        LOGGER.info("{} {} loaded with {} interfaces: {}", name, version, bundled.size(), String.join(", ", bundled));
     }
 
 }

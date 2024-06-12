@@ -31,6 +31,8 @@ Fixes JitPack builds.
 
 # Minor Release 1.1.0
 
+Better ensures that basic environments are present when loading, and improves debug logging.
+
 ## Content Changes
 
 - Added basic startup logging.

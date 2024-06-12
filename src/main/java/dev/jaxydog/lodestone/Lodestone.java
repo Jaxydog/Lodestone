@@ -34,7 +34,7 @@ import java.util.function.Consumer;
  * @author Jaxydog
  * @since 1.0.0
  */
-public class Lodestone implements ModInitializer {
+public final class Lodestone implements ModInitializer {
 
     /**
      * Lodestone's mod identifier.

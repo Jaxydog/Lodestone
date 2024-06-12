@@ -14,19 +14,17 @@
 
 package dev.jaxydog.lodestone;
 
-import dev.jaxydog.lodestone.api.*;
+import dev.jaxydog.lodestone.api.Loaded;
 import dev.jaxydog.lodestone.impl.LoaderEnvironment;
 import dev.jaxydog.lodestone.impl.LoaderEnvironmentRegistry;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -56,30 +54,6 @@ public class Lodestone implements ModInitializer {
      * @since 1.0.0
      */
     private static final LoaderEnvironmentRegistry REGISTRY = LoaderEnvironmentRegistry.create();
-    /**
-     * A map containing queues of to-be-registered loader entrypoints.
-     * <p>
-     * This is only used during mod initialization, in cases where an entrypoint is registered before its associated
-     * environment is.
-     *
-     * @since 1.0.0
-     */
-    private static final Map<Class<? extends Loaded>, Queue<? extends Loaded>> QUEUE = new Object2ObjectOpenHashMap<>();
-    /**
-     * A map containing queues of to-be-loaded mod identifiers.
-     * <p>
-     * This is only used during mod initialization, in cases where an environment is loaded before it was registered.
-     *
-     * @since 1.0.0
-     */
-    private static final Map<Class<? extends Loaded>, Queue<String>> LOADED = new Object2ObjectOpenHashMap<>();
-
-    /**
-     * Tracks whether the mod has finished loading all environment instances.
-     *
-     * @since 1.0.0
-     */
-    private static final AtomicBoolean LOADED_ENVIRONMENTS = new AtomicBoolean(false);
 
     /**
      * Creates and registers a new environment for the given {@link Loaded} interface.
@@ -121,16 +95,11 @@ public class Lodestone implements ModInitializer {
      *
      * @since 1.0.0
      */
-    @SuppressWarnings("unchecked")
     public static <T extends Loaded> void register(Class<? extends T> type, T value) {
-        if (LOADED_ENVIRONMENTS.get()) {
-            try {
-                REGISTRY.addEntrypoint(type, value);
-            } catch (IllegalArgumentException exception) {
-                LOGGER.error(exception.getLocalizedMessage());
-            }
-        } else {
-            ((Queue<T>) QUEUE.computeIfAbsent(type, t -> new ArrayDeque<T>(1))).add(value);
+        try {
+            REGISTRY.addEntrypoint(type, value);
+        } catch (IllegalArgumentException exception) {
+            LOGGER.error(exception.getLocalizedMessage());
         }
     }
 
@@ -184,14 +153,10 @@ public class Lodestone implements ModInitializer {
      * @since 1.0.0
      */
     public static <T extends Loaded> void load(Class<? extends T> type, String modId) {
-        if (LOADED_ENVIRONMENTS.get()) {
-            try {
-                REGISTRY.loadEntrypoints(type, modId);
-            } catch (IllegalArgumentException exception) {
-                LOGGER.error(exception.getLocalizedMessage());
-            }
-        } else {
-            LOADED.computeIfAbsent(type, t -> new ArrayDeque<>(1)).add(modId);
+        try {
+            REGISTRY.loadEntrypoints(type, modId);
+        } catch (IllegalArgumentException exception) {
+            LOGGER.error(exception.getLocalizedMessage());
         }
     }
 
@@ -236,25 +201,10 @@ public class Lodestone implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        createEnvironment(CommonLoaded.class, CommonLoaded::loadCommon);
+        final Set<Class<? extends Loaded>> environments = getInterfaces();
+        final String list = String.join(", ", environments.stream().map(Class::getSimpleName).toList());
 
-        if (FabricLoader.getInstance().getEnvironmentType().equals(EnvType.CLIENT)) {
-            createEnvironment(ClientLoaded.class, ClientLoaded::loadClient);
-        } else {
-            createEnvironment(ServerLoaded.class, ServerLoaded::loadServer);
-
-            if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-                createEnvironment(DataGenerating.class, DataGenerating::generate);
-            }
-        }
-
-        LOADED_ENVIRONMENTS.set(true);
-
-        QUEUE.forEach(Lodestone::register);
-        QUEUE.clear();
-
-        LOADED.forEach(Lodestone::load);
-        LOADED.clear();
+        LOGGER.info("Lodestone fully initialized with {} interfaces: {}", environments.size(), list);
     }
 
 }

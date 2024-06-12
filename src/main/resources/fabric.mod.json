@@ -19,7 +19,8 @@
     "environment": "*",
     "mixins": [ "lodestone.mixins.json" ],
     "entrypoints": {
-        "main": [ "dev.jaxydog.lodestone.Lodestone" ]
+        "main": [ "dev.jaxydog.lodestone.Lodestone" ],
+        "preLaunch": [ "dev.jaxydog.lodestone.LodestonePreLaunch" ]
     },
 
     "depends": {

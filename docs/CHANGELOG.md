@@ -28,3 +28,10 @@ Fixes JitPack builds.
 ## Internal Changes
 
 - Added `jitpack.yml` to configure the Java version.
+
+# Minor Release 1.1.0
+
+## Internal Changes
+
+- Basic environment registration now happens during the pre-launch stages of loading.
+- Improved basic testing.

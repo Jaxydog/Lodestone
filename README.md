@@ -19,7 +19,7 @@ To create an automatically registered type, simply implement the target environm
 /** An item that is loaded at runtime. */
 public class LoadedItem extends Item implements CommonLoaded {
 
-    // Required for all instances of `Loaded`. Allow Lodestone to sort registered values by mod identifier.
+    // Required for all instances of `Loaded`. Allows Lodestone to group registered values by mod identifier.
     @Override
     public Identifier getLoaderId() {
         return Identifier.of("your_mod", "your_item");

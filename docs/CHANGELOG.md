@@ -5,6 +5,7 @@ Better enforce loader restrictions.
 ## Content Changes
 
 - Loading methods now throw if no mod identifiers are supplied.
+- Throw an exception if the mod is initialized without any environments.
 
 ---
 

@@ -225,7 +225,11 @@ public final class Lodestone implements ModInitializer {
         final Set<Class<? extends Loaded>> environments = getInterfaces();
         final String list = String.join(", ", environments.stream().map(Class::getSimpleName).toList());
 
-        LOGGER.info("Lodestone fully initialized with {} interfaces: {}", environments.size(), list);
+        if (environments.isEmpty()) {
+            throw new IllegalStateException("Lodestone initialized without any environments");
+        } else {
+            LOGGER.info("Lodestone fully initialized with {} interfaces: {}", environments.size(), list);
+        }
     }
 
 }

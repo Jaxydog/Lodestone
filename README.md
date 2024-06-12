@@ -141,7 +141,7 @@ repositories {
 }
 
 dependencies {
-    modImplementation 'com.github.jaxydog:Lodestone:${project.lodestone_version}'
+    modImplementation 'com.github.Jaxydog:Lodestone:${project.lodestone_version}'
 }
 ```
 

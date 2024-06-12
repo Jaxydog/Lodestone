@@ -29,6 +29,8 @@ Fixes JitPack builds.
 
 - Added `jitpack.yml` to configure the Java version.
 
+---
+
 # Minor Release 1.1.0
 
 Better ensures that basic environments are present when loading, and improves debug logging.
@@ -65,3 +67,13 @@ Ensure that `AutoLoader` instances play nicely when also implementing a `Loaded`
 ## Internal Changes
 
 - Check for instances of `AutoLoader` before checking for `Loaded` inheritance.
+
+---
+
+# Minor Release 1.2.0
+
+Better enforce loader restrictions.
+
+## Content Changes
+
+- Loading methods now throw if no mod identifiers are supplied.

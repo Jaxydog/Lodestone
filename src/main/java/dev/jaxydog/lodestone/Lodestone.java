@@ -167,9 +167,16 @@ public final class Lodestone implements ModInitializer {
      * @param modIds The requesting mod's identifiers.
      * @param <T> The type of the {@link Loaded} interface.
      *
+     * @throws IllegalArgumentException If the given list of mod identifiers is empty.
      * @since 1.0.0
      */
-    public static <T extends Loaded> void load(Class<? extends T> type, String... modIds) {
+    public static <T extends Loaded> void load(
+        Class<? extends T> type, String... modIds
+    ) throws IllegalArgumentException {
+        if (modIds.length == 0) {
+            throw new IllegalArgumentException("At least one mod identifier must be supplied during loading");
+        }
+
         for (final String modId : modIds) load(type, modId);
     }
 
@@ -180,9 +187,16 @@ public final class Lodestone implements ModInitializer {
      * @param modIds The requesting mod's identifiers.
      * @param <T> The type of the {@link Loaded} interface.
      *
+     * @throws IllegalArgumentException If the given list of mod identifiers is empty.
      * @since 1.0.0
      */
-    public static <T extends Loaded> void load(Class<? extends T> type, Iterator<String> modIds) {
+    public static <T extends Loaded> void load(
+        Class<? extends T> type, Iterator<String> modIds
+    ) throws IllegalArgumentException {
+        if (!modIds.hasNext()) {
+            throw new IllegalArgumentException("At least one mod identifier must be supplied during loading");
+        }
+
         modIds.forEachRemaining(modId -> load(type, modId));
     }
 
@@ -193,9 +207,16 @@ public final class Lodestone implements ModInitializer {
      * @param modIds The requesting mod's identifiers.
      * @param <T> The type of the {@link Loaded} interface.
      *
+     * @throws IllegalArgumentException If the given list of mod identifiers is empty.
      * @since 1.0.0
      */
-    public static <T extends Loaded> void load(Class<? extends T> type, Collection<String> modIds) {
+    public static <T extends Loaded> void load(
+        Class<? extends T> type, Collection<String> modIds
+    ) throws IllegalArgumentException {
+        if (modIds.isEmpty()) {
+            throw new IllegalArgumentException("At least one mod identifier must be supplied during loading");
+        }
+
         modIds.forEach(modId -> load(type, modId));
     }
 

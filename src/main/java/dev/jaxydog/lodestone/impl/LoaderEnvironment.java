@@ -17,6 +17,7 @@ package dev.jaxydog.lodestone.impl;
 import dev.jaxydog.lodestone.api.Loaded;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -49,11 +50,12 @@ public final class LoaderEnvironment<T extends Loaded> {
      * @param type The associated {@link Loaded} interface.
      * @param load A consumer method that loads the value.
      *
+     * @throws NullPointerException If the given type of loading method are null.
      * @since 1.0.0
      */
-    public LoaderEnvironment(Class<? extends T> type, Consumer<? super T> load) {
-        this.type = type;
-        this.load = load;
+    public LoaderEnvironment(Class<? extends T> type, Consumer<? super T> load) throws NullPointerException {
+        this.type = Objects.requireNonNull(type);
+        this.load = Objects.requireNonNull(load);
     }
 
     /**

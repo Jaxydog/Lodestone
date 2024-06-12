@@ -6,6 +6,7 @@ Better enforce loader restrictions.
 
 - Loading methods now throw if no mod identifiers are supplied.
 - Throw an exception if the mod is initialized without any environments.
+- Throw exceptions when passing null values.
 
 ---
 

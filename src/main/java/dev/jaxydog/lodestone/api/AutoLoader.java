@@ -121,7 +121,16 @@ public abstract class AutoLoader implements Loaded {
      * @since 1.0.0
      */
     public <T extends Loaded> void register(Class<? extends T> type) {
-        this.iterate(type, (field, value) -> Lodestone.register(type, value));
+        this.iterate(type, (field, value) -> {
+            try {
+                Lodestone.register(type, value);
+            } catch (NullPointerException exception) {
+                final String className = this.getClass().getSimpleName();
+                final String fieldName = field.getName();
+
+                this.logger.error("Attempted to register '{}#{}' with a null value", className, fieldName);
+            }
+        });
     }
 
     /**

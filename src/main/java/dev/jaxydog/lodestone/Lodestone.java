@@ -71,6 +71,8 @@ public final class Lodestone implements ModInitializer {
             REGISTRY.register(new LoaderEnvironment<>(type, load));
         } catch (IllegalArgumentException exception) {
             LOGGER.error(exception.getLocalizedMessage());
+        } catch (NullPointerException exception) {
+            LOGGER.error("Attempted to register a null environment");
         }
     }
 
@@ -100,6 +102,8 @@ public final class Lodestone implements ModInitializer {
             REGISTRY.addEntrypoint(type, value);
         } catch (IllegalArgumentException exception) {
             LOGGER.error(exception.getLocalizedMessage());
+        } catch (NullPointerException exception) {
+            LOGGER.error("Attempted to register a null value");
         }
     }
 

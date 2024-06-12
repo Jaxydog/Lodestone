@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -78,10 +79,11 @@ public final class LoaderEnvironmentRegistry {
      *
      * @throws IllegalArgumentException If the given environment's associated {@link Loaded} interface has already been
      * registered, or if the given environment's associated {@link Loaded} type is not an interface.
+     * @throws NullPointerException If the given environment is null.
      * @since 1.0.0
      */
-    public <T extends Loaded> void register(LoaderEnvironment<T> environment) throws IllegalArgumentException {
-        final Class<? extends T> type = environment.getInterface();
+    public <T extends Loaded> void register(LoaderEnvironment<T> environment) throws IllegalArgumentException, NullPointerException {
+        final Class<? extends T> type = Objects.requireNonNull(environment).getInterface();
 
         if (!type.isInterface()) {
             throw new IllegalArgumentException("The environment's associated type should be an interface");
@@ -129,12 +131,15 @@ public final class LoaderEnvironmentRegistry {
      *
      * @throws IllegalArgumentException If the given {@link Loaded} interface does not have a registered
      * {@link LoaderEnvironment}.
+     * @throws NullPointerException If the given entrypoint is null.
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
     public <T extends Loaded> void addEntrypoint(
         Class<? extends T> type, T entrypoint
-    ) throws IllegalArgumentException {
+    ) throws IllegalArgumentException, NullPointerException {
+        Objects.requireNonNull(entrypoint);
+
         if (this.has(type)) {
             final String modId = entrypoint.getLoaderId().getNamespace();
             final Set<T> set = (Set<T>) this.entries.get(type)

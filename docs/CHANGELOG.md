@@ -57,3 +57,11 @@ Ensure that `AutoLoader` instances are skipped if annotated with `IgnoreLoading`
 ## Internal Changes
 
 - Properly handle `IgnoreLoading` for `AutoLoader` instances.
+
+# Minor Patch 1.1.2
+
+Ensure that `AutoLoader` instances play nicely when also implementing a `Loaded` interface.
+
+## Internal Changes
+
+- Check for instances of `AutoLoader` before checking for `Loaded` inheritance.

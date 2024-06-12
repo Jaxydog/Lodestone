@@ -14,13 +14,14 @@
 
 package dev.jaxydog.lodestone;
 
+import dev.jaxydog.lodestone.LodestoneTest.TestLoaded;
 import dev.jaxydog.lodestone.api.CommonLoaded;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public class LoadedItem extends Item implements CommonLoaded {
+public class LoadedItem extends Item implements CommonLoaded, TestLoaded {
 
     private final String path;
 
@@ -38,6 +39,13 @@ public class LoadedItem extends Item implements CommonLoaded {
     @Override
     public void loadCommon() {
         Registry.register(Registries.ITEM, this.getLoaderId(), this);
+
+        Lodestone.LOGGER.info("Registered '{}'", this.getLoaderId());
+    }
+
+    @Override
+    public void loadTest() {
+        Lodestone.LOGGER.info("Test print from '{}'", this.getLoaderId());
     }
 
 }

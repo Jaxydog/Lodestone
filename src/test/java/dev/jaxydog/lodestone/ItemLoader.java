@@ -14,13 +14,21 @@
 
 package dev.jaxydog.lodestone;
 
+import dev.jaxydog.lodestone.LodestoneTest.TestLoaded;
 import dev.jaxydog.lodestone.api.AutoLoader;
+import dev.jaxydog.lodestone.api.IgnoreLoading;
+import dev.jaxydog.lodestone.api.LoadingPriority;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.util.Identifier;
 
 public final class ItemLoader extends AutoLoader {
 
-    public static final LoadedItem TEST_ITEM = new LoadedItem("test_item", new Settings());
+    @LoadingPriority(-1)
+    public static final LoadedItem ITEM_1 = new LoadedItem("item_1", new Settings());
+    public static final LoadedItem ITEM_2 = new LoadedItem("item_2", new Settings());
+    @LoadingPriority(1)
+    @IgnoreLoading({ TestLoaded.class })
+    public static final LoadedItem ITEM_3 = new LoadedItem("item_3", new Settings());
 
     @Override
     public Identifier getLoaderId() {

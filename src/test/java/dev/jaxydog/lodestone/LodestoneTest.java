@@ -15,6 +15,7 @@
 package dev.jaxydog.lodestone;
 
 import dev.jaxydog.lodestone.api.CommonLoaded;
+import dev.jaxydog.lodestone.api.Loaded;
 import net.fabricmc.api.ModInitializer;
 
 public class LodestoneTest implements ModInitializer {
@@ -24,9 +25,18 @@ public class LodestoneTest implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        Lodestone.createEnvironment(TestLoaded.class, TestLoaded::loadTest);
+
         LOADER.register();
 
         Lodestone.load(CommonLoaded.class, MOD_ID);
+        Lodestone.load(TestLoaded.class, MOD_ID);
+    }
+
+    interface TestLoaded extends Loaded {
+
+        void loadTest();
+
     }
 
 }

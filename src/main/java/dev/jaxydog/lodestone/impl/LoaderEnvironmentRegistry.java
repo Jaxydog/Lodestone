@@ -19,6 +19,8 @@ import dev.jaxydog.lodestone.api.Loaded;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import org.jetbrains.annotations.ApiStatus.Internal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +33,13 @@ import java.util.Set;
  */
 @Internal
 public final class LoaderEnvironmentRegistry {
+
+    /**
+     * The environment registry's logger.
+     *
+     * @since 1.1.0
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger("Lodestone/Registry");
 
     /**
      * The environment's entries mapped to their associated {@link Loaded} interfaces.
@@ -81,6 +90,8 @@ public final class LoaderEnvironmentRegistry {
         }
 
         this.entries.put(type, new Entry<>(environment));
+
+        LOGGER.debug("Added new loader environment interface: {}", type.getSimpleName());
     }
 
     /**
@@ -154,6 +165,8 @@ public final class LoaderEnvironmentRegistry {
     ) throws IllegalArgumentException {
         if (this.has(type)) {
             this.entries.get(type).loadEntrypoints(modId);
+
+            LOGGER.debug("Loaded all {} entrypoints for '{}'", type.getSimpleName(), modId);
         } else {
             throw new IllegalArgumentException("An environment has not been registered for '%s'".formatted(type.getSimpleName()));
         }

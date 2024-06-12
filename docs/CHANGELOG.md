@@ -36,6 +36,7 @@ Fixes JitPack builds.
 - Added basic startup logging.
 - Logs now have a capitalized logger name.
 - The `Lodestone` class is no longer extendable.
+- Added basic debug logging for the environment registry.
 
 ## Internal Changes
 

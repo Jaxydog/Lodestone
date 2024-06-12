@@ -31,6 +31,11 @@ Fixes JitPack builds.
 
 # Minor Release 1.1.0
 
+## Content Changes
+
+- Added basic startup logging.
+- Logs now have a capitalized logger name.
+
 ## Internal Changes
 
 - Basic environment registration now happens during the pre-launch stages of loading.

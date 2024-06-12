@@ -18,6 +18,7 @@ import dev.jaxydog.lodestone.api.Loaded;
 import dev.jaxydog.lodestone.impl.LoaderEnvironment;
 import dev.jaxydog.lodestone.impl.LoaderEnvironmentRegistry;
 import net.fabricmc.api.ModInitializer;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +47,7 @@ public class Lodestone implements ModInitializer {
      *
      * @since 1.0.0
      */
-    static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    static final Logger LOGGER = LoggerFactory.getLogger(StringUtils.capitalize(MOD_ID));
 
     /**
      * The mod's loader environment registry instance.

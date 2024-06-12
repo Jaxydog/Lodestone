@@ -14,6 +14,8 @@
 
 package dev.jaxydog.lodestone.api;
 
+import dev.jaxydog.lodestone.impl.BundledLoader;
+
 /**
  * A value that should be loaded during data generation.
  * <p>
@@ -22,6 +24,7 @@ package dev.jaxydog.lodestone.api;
  * @author Jaxydog
  * @since 1.0.0
  */
+@BundledLoader
 public interface DataGenerating extends Loaded {
 
     /**

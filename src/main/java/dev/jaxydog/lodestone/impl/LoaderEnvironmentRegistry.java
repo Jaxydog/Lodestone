@@ -93,7 +93,11 @@ public final class LoaderEnvironmentRegistry {
 
         this.entries.put(type, new Entry<>(environment));
 
-        LOGGER.debug("Added new loader environment interface: {}", type.getSimpleName());
+        if (environment.isBundled()) {
+            LOGGER.debug("Added bundled loader environment: {}", type.getSimpleName());
+        } else {
+            LOGGER.debug("Added modded loader environment: {}", type.getSimpleName());
+        }
     }
 
     /**

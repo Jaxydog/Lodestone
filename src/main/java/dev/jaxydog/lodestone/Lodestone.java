@@ -15,15 +15,19 @@
 package dev.jaxydog.lodestone;
 
 import dev.jaxydog.lodestone.api.Loaded;
+import dev.jaxydog.lodestone.impl.BundledLoader;
 import dev.jaxydog.lodestone.impl.LoaderEnvironment;
 import dev.jaxydog.lodestone.impl.LoaderEnvironmentRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -226,14 +230,19 @@ public final class Lodestone implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        final Set<Class<? extends Loaded>> environments = getInterfaces();
-        final String list = String.join(", ", environments.stream().map(Class::getSimpleName).toList());
+        final Set<Class<? extends Loaded>> types = getInterfaces();
+        final ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
+        final String name = mod.getMetadata().getName();
 
-        if (environments.isEmpty()) {
-            throw new IllegalStateException("Lodestone initialized without any environments");
-        } else {
-            LOGGER.info("Lodestone fully initialized with {} interfaces: {}", environments.size(), list);
-        }
+        if (types.isEmpty()) throw new IllegalStateException("%s initialized without any types".formatted(name));
+
+        final String version = mod.getMetadata().getVersion().getFriendlyString();
+        final List<String> bundled = types.stream()
+            .filter(c -> c.isAnnotationPresent(BundledLoader.class))
+            .map(Class::getSimpleName)
+            .toList();
+
+        LOGGER.info("{} {} loaded with {} interfaces: {}", name, version, types.size(), String.join(", ", bundled));
     }
 
 }

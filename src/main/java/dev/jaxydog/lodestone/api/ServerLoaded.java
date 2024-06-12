@@ -14,6 +14,8 @@
 
 package dev.jaxydog.lodestone.api;
 
+import dev.jaxydog.lodestone.impl.BundledLoader;
+
 /**
  * A value that should be loaded at runtime.
  * <p>
@@ -25,6 +27,7 @@ package dev.jaxydog.lodestone.api;
  * @see ClientLoaded
  * @since 1.0.0
  */
+@BundledLoader
 public interface ServerLoaded extends Loaded {
 
     /**

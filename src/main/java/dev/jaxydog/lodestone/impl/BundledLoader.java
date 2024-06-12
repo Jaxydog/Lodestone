@@ -12,29 +12,24 @@
  * You should have received a copy of the GNU Affero General Public License along with Lodestone. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package dev.jaxydog.lodestone.api;
+package dev.jaxydog.lodestone.impl;
 
-import dev.jaxydog.lodestone.impl.BundledLoader;
+import org.jetbrains.annotations.ApiStatus.Internal;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * A value that should be loaded at runtime.
- * <p>
- * The provided {@link #loadClient()} method is only run on the client. If you only want the server or both, see
- * {@link ServerLoaded} and {@link CommonLoaded}.
+ * Marks a {@link dev.jaxydog.lodestone.api.Loaded} interface as being included with Lodestone.
  *
  * @author Jaxydog
- * @see CommonLoaded
- * @see ServerLoaded
- * @since 1.0.0
+ * @since 1.3.0
  */
-@BundledLoader
-public interface ClientLoaded extends Loaded {
-
-    /**
-     * Loads this value at runtime on the client.
-     *
-     * @since 1.0.0
-     */
-    void loadClient();
+@Internal
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface BundledLoader {
 
 }

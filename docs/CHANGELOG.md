@@ -1,10 +1,16 @@
-# Minor Patch 1.2.1
+# Minor Release 1.3.0
 
-Reduce unnecessary registrations.
+Reduces unnecessary registrations and distinguishes between bundled and added loader interfaces.
+
+## Content Changes
+
+- Each bundled environment interface is now annotated with `@BundledLoaded`.
 
 ## Internal Changes
 
 - Only register DataGenerating environment if the data generator is actually enabled.
+
+---
 
 # Minor Release 1.2.0
 

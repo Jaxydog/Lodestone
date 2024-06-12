@@ -70,6 +70,17 @@ public final class LoaderEnvironment<T extends Loaded> {
     }
 
     /**
+     * Returns whether the associated {@link Loaded} interface is bundled with Lodestone.
+     *
+     * @return Whether the associated {@link Loaded} interface is bundled with Lodestone.
+     *
+     * @since 1.3.0
+     */
+    public boolean isBundled() {
+        return this.type.isAnnotationPresent(BundledLoader.class);
+    }
+
+    /**
      * Loads the given value.
      *
      * @param value The value to load.

@@ -18,7 +18,6 @@ import com.google.common.collect.ImmutableSet;
 import dev.jaxydog.lodestone.api.Loaded;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
-import org.jetbrains.annotations.ApiStatus.Internal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,6 @@ import java.util.Set;
  * @author Jaxydog
  * @since 1.0.0
  */
-@Internal
 public final class LoaderEnvironmentRegistry {
 
     /**

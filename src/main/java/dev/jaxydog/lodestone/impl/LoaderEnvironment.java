@@ -15,7 +15,6 @@
 package dev.jaxydog.lodestone.impl;
 
 import dev.jaxydog.lodestone.api.Loaded;
-import org.jetbrains.annotations.ApiStatus.Internal;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -28,7 +27,6 @@ import java.util.function.Consumer;
  * @author Jaxydog
  * @since 1.0.0
  */
-@Internal
 public final class LoaderEnvironment<T extends Loaded> {
 
     /**

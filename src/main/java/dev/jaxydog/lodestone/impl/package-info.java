@@ -12,21 +12,12 @@
  * You should have received a copy of the GNU Affero General Public License along with Lodestone. If not, see <https://www.gnu.org/licenses/>.
  */
 
+/**
+ * Implements Lodestone's core functionality.
+ *
+ * @since 1.0.0
+ */
+@Internal
 package dev.jaxydog.lodestone.impl;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-/**
- * Marks a {@link dev.jaxydog.lodestone.api.Loaded} interface as being included with Lodestone.
- *
- * @author Jaxydog
- * @since 1.3.0
- */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface BundledLoader {
-
-}
+import org.jetbrains.annotations.ApiStatus.Internal;

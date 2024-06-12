@@ -10,7 +10,7 @@ Reduces unnecessary registrations and distinguishes between bundled and added lo
 
 ## Internal Changes
 
-- Only register DataGenerating environment if the data generator is actually enabled.
+- Only register `DataGenerating` environment if the data generator is actually enabled.
 
 ---
 

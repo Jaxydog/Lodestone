@@ -4,7 +4,9 @@ Reduces unnecessary registrations and distinguishes between bundled and added lo
 
 ## Content Changes
 
-- Each bundled environment interface is now annotated with `@BundledLoaded`.
+- Each bundled environment interface is now annotated with `@BundledLoader`.
+- Marked the entire `impl` package as `@Internal`.
+- Added package-level documentation.
 
 ## Internal Changes
 

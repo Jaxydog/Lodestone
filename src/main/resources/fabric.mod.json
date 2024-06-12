@@ -21,6 +21,11 @@
         "main": [ "dev.jaxydog.lodestone.Lodestone" ],
         "preLaunch": [ "dev.jaxydog.lodestone.LodestonePreLaunch" ]
     },
+    "custom": {
+        "modmenu": {
+            "badges": [ "library" ]
+        }
+    },
 
     "depends": {
         "fabricloader": ">=0.15.11",

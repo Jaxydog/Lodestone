@@ -45,3 +45,15 @@ Better ensures that basic environments are present when loading, and improves de
 - Basic environment registration now happens during the pre-launch stages of loading.
 - Improved basic testing.
 - Removed unnecessary mixin manifest.
+
+# Minor Patch 1.1.1
+
+Ensure that `AutoLoader` instances are skipped if annotated with `IgnoreLoading`.
+
+## Content Changes
+
+- Mark the mod as a library in ModMenu.
+
+## Internal Changes
+
+- Properly handle `IgnoreLoading` for `AutoLoader` instances.

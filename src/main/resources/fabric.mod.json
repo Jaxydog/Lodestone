@@ -17,7 +17,6 @@
     "icon": "assets/lodestone/icon.png",
 
     "environment": "*",
-    "mixins": [ "lodestone.mixins.json" ],
     "entrypoints": {
         "main": [ "dev.jaxydog.lodestone.Lodestone" ],
         "preLaunch": [ "dev.jaxydog.lodestone.LodestonePreLaunch" ]

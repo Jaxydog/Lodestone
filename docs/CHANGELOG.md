@@ -42,3 +42,4 @@ Fixes JitPack builds.
 
 - Basic environment registration now happens during the pre-launch stages of loading.
 - Improved basic testing.
+- Removed unnecessary mixin manifest.

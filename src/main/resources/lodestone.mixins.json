@@ -1,9 +1,0 @@
-{
-    "required": true,
-    "package": "dev.jaxydog.lodestone.mixin",
-    "compatibilityLevel": "JAVA_21",
-    "mixins": [ ],
-    "client": [ ],
-    "server": [ ],
-    "injectors": { "defaultRequire": 1 }
-}

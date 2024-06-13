@@ -94,41 +94,45 @@ publishing {
     }
 }
 
-githubRelease {
-    setToken(System.getenv("GITHUB_GRADLE_TOKEN") as String)
+if (System.getenv("GITHUB_GRADLE_TOKEN") != null) {
+    githubRelease {
+        token = System.getenv("GITHUB_GRADLE_TOKEN")
 
-    owner = "Jaxydog"
-    repo = "Lodestone"
+        owner = "Jaxydog"
+        repo = "Lodestone"
 
-    tagName = mod_version
-    releaseName = "Lodestone ${mod_version}"
-    prerelease = !currentVersionType.equalsIgnoreCase("release")
-    body = currentChangelog
-    draft = false
-    releaseAssets = files(
-        remapJar.destinationDirectory.getAsFileTree().matching {
-            it.include("lodestone-${mod_version}*.jar")
-        }
-    )
+        tagName = mod_version
+        releaseName = "Lodestone ${mod_version}"
+        prerelease = !currentVersionType.equalsIgnoreCase("release")
+        body = currentChangelog
+        draft = false
+        releaseAssets = files(
+            remapJar.destinationDirectory.getAsFileTree().matching {
+                it.include("lodestone-${mod_version}*.jar")
+            }
+        )
 
-    dryRun = publish_debug.equalsIgnoreCase("true")
+        dryRun = publish_debug.equalsIgnoreCase("true")
+    }
 }
 
-modrinth {
-    token = System.getenv("MODRINTH_TOKEN")
-    projectId = project.modrinth_id
+if (System.getenv("MODRINTH_TOKEN") != null) {
+    modrinth {
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = project.modrinth_id
 
-    versionName = "Lodestone ${project.mod_version}"
-    versionType = currentVersionType
-    gameVersions = [project.minecraft_version]
-    changelog = currentChangelog
+        versionName = "Lodestone ${project.mod_version}"
+        versionType = currentVersionType
+        gameVersions = [project.minecraft_version]
+        changelog = currentChangelog
 
-    uploadFile = remapJar
-    additionalFiles = [remapSourcesJar, javadocJar]
-    syncBodyFrom = rootProject.file("README.md").text
-    debugMode = project.publish_debug.equalsIgnoreCase("true")
+        uploadFile = remapJar
+        additionalFiles = [remapSourcesJar, javadocJar]
+        syncBodyFrom = rootProject.file("README.md").text
+        debugMode = project.publish_debug.equalsIgnoreCase("true")
 
-    dependencies {}
+        dependencies {}
+    }
 }
 
 @SuppressWarnings('ChangeToOperator')

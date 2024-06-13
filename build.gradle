@@ -15,6 +15,7 @@
 plugins {
     id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'maven-publish'
+    id 'com.modrinth.minotaur' version '2.+'
 }
 
 version = project.mod_version
@@ -61,6 +62,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
+tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 
 java {
     withSourcesJar()
@@ -88,4 +90,60 @@ publishing {
     repositories {
         maven { url 'https://jitpack.io' }
     }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = project.modrinth_id
+
+    versionName = "Lodestone ${project.mod_version}"
+    versionType = currentVersionType
+    gameVersions = [project.minecraft_version]
+    changelog = currentChangelog
+
+    uploadFile = remapJar
+    additionalFiles = [remapSourcesJar, javadocJar]
+    syncBodyFrom = rootProject.file("README.md").text
+    debugMode = project.modrinth_debug.equalsIgnoreCase("true")
+
+    dependencies {}
+}
+
+@SuppressWarnings('ChangeToOperator')
+String getCurrentVersionType() {
+    final String[] parts = project.mod_version.split("-")
+
+    if (parts.length == 1 || parts[1].matches("release")) return "release"
+    if (parts.length == 2 && parts[1].matches("beta|rc\\d")) return "beta"
+    if (parts.length == 2 && parts[1].matches("alpha")) return "alpha"
+
+    throw new IllegalArgumentException("Invalid version number: %s".formatted(project.mod_version))
+}
+
+String getCurrentChangelog() {
+    final File file = file "docs/CHANGELOG.md"
+
+    if (!file.exists()) throw new IOException("Missing changelog file")
+
+    String changelog = ""
+    boolean shouldCapture = false
+    boolean shouldStop = false
+
+    file.eachLine { String line ->
+        if (shouldStop) return void
+
+        if (shouldCapture) {
+            if (line.startsWith("---")) {
+                shouldStop = true
+            } else {
+                changelog += line + '\n'
+            }
+        } else {
+            shouldCapture = line.startsWith("# ") && line.contains("${project.version}")
+        }
+
+        return void
+    }
+
+    return changelog.trim()
 }

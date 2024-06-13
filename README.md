@@ -1,7 +1,9 @@
+<!-- modrinth_exclude.start -->
 # Lodestone
 
 ![Build status](https://github.com/Jaxydog/Lodestone/actions/workflows/build.yml/badge.svg)
 
+<!-- modrinth_exclude.end -->
 An automatic content loader for Fabric mods.
 
 ### Usage
@@ -101,7 +103,7 @@ public class YourMod implements ModInitializer {
 
 }
 ```
-
+<!-- modrinth_exclude.start -->
 ### Installation
 
 Lodestone's most up-to-date JAR file may be downloaded from
@@ -121,7 +123,7 @@ cd ./Lodestone/
 ```
 
 The compiled JAR files will be located within the `./build/libs/` directory.
-
+<!-- modrinth_exclude.end -->
 ### Depending on Lodestone
 
 Lodestone's sole purpose is to be used as a library for other mods. If you would like to depend on Lodestone for your
@@ -144,7 +146,7 @@ dependencies {
     modImplementation 'com.github.Jaxydog:Lodestone:${project.lodestone_version}'
 }
 ```
-
+<!-- modrinth_exclude.start -->
 ### Contributing
 
 Contributions are always welcome! If you're interested in helping development, please read this
@@ -163,3 +165,4 @@ details.
 
 You should have received a copy of the GNU Affero General Public License along with Lodestone (located
 within [LICENSE](./LICENSE)). If not, see <[https://www.gnu.org/licenses/](https://www.gnu.org/licenses/)>.
+<!-- modrinth_exclude.end -->

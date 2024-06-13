@@ -65,6 +65,7 @@ processResources {
 tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
 tasks.githubRelease.dependsOn(tasks.build)
 tasks.modrinth.dependsOn(tasks.build, tasks.modrinthSyncBody)
+tasks.register("release") { it.dependsOn(tasks.githubRelease, tasks.modrinth) }
 
 java {
     withSourcesJar()

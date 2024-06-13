@@ -16,6 +16,7 @@ plugins {
     id "fabric-loom" version "1.6-SNAPSHOT"
     id "maven-publish"
     id "com.modrinth.minotaur" version "2.+"
+    id "com.github.breadmoirai.github-release" version "2.+"
 }
 
 version = project.mod_version
@@ -62,7 +63,8 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
-tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
+tasks.githubRelease.dependsOn(tasks.build)
+tasks.modrinth.dependsOn(tasks.build, tasks.modrinthSyncBody)
 
 java {
     withSourcesJar()
@@ -92,6 +94,26 @@ publishing {
     }
 }
 
+githubRelease {
+    token = System.getenv("GITHUB_GRADLE_TOKEN")
+
+    owner = "Jaxydog"
+    repo = "Lodestone"
+
+    tagName = mod_version
+    releaseName = "Lodestone ${mod_version}"
+    prerelease = !currentVersionType.equalsIgnoreCase("release")
+    body = currentChangelog
+    draft = false
+    releaseAssets = files(
+        remapJar.destinationDirectory.getAsFileTree().matching {
+            it.include("lodestone-${mod_version}*.jar")
+        }
+    )
+
+    dryRun = publish_debug.equalsIgnoreCase("true")
+}
+
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = project.modrinth_id
@@ -104,7 +126,7 @@ modrinth {
     uploadFile = remapJar
     additionalFiles = [remapSourcesJar, javadocJar]
     syncBodyFrom = rootProject.file("README.md").text
-    debugMode = project.modrinth_debug.equalsIgnoreCase("true")
+    debugMode = project.publish_debug.equalsIgnoreCase("true")
 
     dependencies {}
 }

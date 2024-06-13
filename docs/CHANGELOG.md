@@ -12,6 +12,15 @@ Reduces unnecessary registrations and distinguishes between bundled and added lo
 
 - Only register `DataGenerating` environment if the data generator is actually enabled.
 
+# Minor Patch 1.3.1
+
+Set up Gradle tasks for publishing to both GitHub and Modrinth.
+
+## Internal Changes
+
+- Added and configured the `minotaur` plugin.
+- Added and configured the `github-release` plugin.
+
 ---
 
 # Minor Release 1.2.0

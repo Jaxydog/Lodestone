@@ -95,7 +95,7 @@ publishing {
 }
 
 githubRelease {
-    token = System.getenv("GITHUB_GRADLE_TOKEN")
+    setToken(System.getenv("GITHUB_GRADLE_TOKEN"))
 
     owner = "Jaxydog"
     repo = "Lodestone"

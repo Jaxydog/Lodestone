@@ -7,6 +7,16 @@ Update to 1.21. Set up Gradle tasks for publishing to both GitHub and Modrinth.
 - Added and configured the `minotaur` plugin.
 - Added and configured the `github-release` plugin.
 
+# Minor Patch 1.4.1
+
+Improve mappings, use latest Fabric API for the test mod.
+
+## Internal Changes
+
+- Added the `release` Gradle task to automate both GitHub and Modrinth publishing.
+- Updated Minecraft mappings.
+- Updated Fabric API version.
+
 ---
 
 # Minor Release 1.3.0

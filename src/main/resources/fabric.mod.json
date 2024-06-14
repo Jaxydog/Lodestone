@@ -13,7 +13,7 @@
 
     "id": "lodestone",
     "version": "${version}",
-    "license": "AGPL-3.0-or-later",
+    "license": "LGPL-3.0-or-later",
     "icon": "assets/lodestone/icon.png",
 
     "environment": "*",

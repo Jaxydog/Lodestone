@@ -22,7 +22,7 @@ will be denied until the issue is solved.
 ## Project Licensing and Copyright Notices
 
 Due to this project's chosen license, all submitted content falls under
-the [GNU Affero General Public License version 3 or later](../LICENSE). If you wish to submit content under another
+the [GNU Lesser General Public License version 3 or later](../LICENSE). If you wish to submit content under another
 license, please contact me directly beforehand.
 
 It is also important that, when creating new file with an applicable content type, they should have a license disclaimer

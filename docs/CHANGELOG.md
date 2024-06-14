@@ -1,3 +1,19 @@
+# Minor Release 1.5.0
+
+Re-license to LGPL-3.0. Improve mappings, use latest Fabric API for the test mod.
+
+## Content Changes
+
+- Changed project license to `LGPL-3.0-or-later`.
+
+## Internal Changes
+
+- Added the `release` Gradle task to automate both GitHub and Modrinth publishing.
+- Updated Minecraft mappings.
+- Updated Fabric API version.
+
+---
+
 # Minor Release 1.4.0
 
 Update to 1.21. Set up Gradle tasks for publishing to both GitHub and Modrinth.
@@ -6,16 +22,6 @@ Update to 1.21. Set up Gradle tasks for publishing to both GitHub and Modrinth.
 
 - Added and configured the `minotaur` plugin.
 - Added and configured the `github-release` plugin.
-
-# Minor Patch 1.4.1
-
-Improve mappings, use latest Fabric API for the test mod.
-
-## Internal Changes
-
-- Added the `release` Gradle task to automate both GitHub and Modrinth publishing.
-- Updated Minecraft mappings.
-- Updated Fabric API version.
 
 ---
 
@@ -64,7 +70,7 @@ Better ensures that basic environments are present when loading, and improves de
 - Improved basic testing.
 - Removed unnecessary mixin manifest.
 
-# Minor Patch 1.1.1
+# Patch 1.1.1
 
 Ensure that `AutoLoader` instances are skipped if annotated with `IgnoreLoading`.
 
@@ -76,7 +82,7 @@ Ensure that `AutoLoader` instances are skipped if annotated with `IgnoreLoading`
 
 - Properly handle `IgnoreLoading` for `AutoLoader` instances.
 
-# Minor Patch 1.1.2
+# Patch 1.1.2
 
 Ensure that `AutoLoader` instances play nicely when also implementing a `Loaded` interface.
 
@@ -109,7 +115,7 @@ The initial release of Lodestone.
 - Added the `LoaderEnvironmentRegistry` class.
 - Added a basic test mod.
 
-# Minor Patch 1.0.1
+# Patch 1.0.1
 
 Fixes JitPack builds.
 

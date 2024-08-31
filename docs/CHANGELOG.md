@@ -1,3 +1,13 @@
+# Patch Release 1.5.1
+
+Update to 1.21.1
+
+## Content Changes
+
+- Updated required loader version to 0.16.3.
+
+---
+
 # Minor Release 1.5.0
 
 Re-license to LGPL-3.0. Improve mappings, use latest Fabric API for the test mod.

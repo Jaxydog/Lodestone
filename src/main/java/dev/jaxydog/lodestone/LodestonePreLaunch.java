@@ -36,6 +36,13 @@ import org.jetbrains.annotations.ApiStatus.Internal;
 @Internal
 public final class LodestonePreLaunch implements PreLaunchEntrypoint {
 
+    /**
+     * Creates a new instance of this entrypoint.
+     *
+     * @since 1.5.3
+     */
+    public LodestonePreLaunch() { }
+
     @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onPreLaunch() {

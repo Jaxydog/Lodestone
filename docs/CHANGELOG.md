@@ -8,6 +8,10 @@ Updates Gradle tasks & versions.
 - Updated Gradle to 8.8.
 - Updated Loom to 1.7-SNAPSHOT.
 
+### Internal Changes
+
+- Resolves two of the three documentation warnings during building.
+
 ---
 
 # Patch Release 1.5.2

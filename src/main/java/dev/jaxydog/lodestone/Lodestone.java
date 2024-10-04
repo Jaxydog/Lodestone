@@ -61,6 +61,13 @@ public final class Lodestone implements ModInitializer {
     private static final LoaderEnvironmentRegistry REGISTRY = LoaderEnvironmentRegistry.create();
 
     /**
+     * Creates a new instance of this entrypoint.
+     *
+     * @since 1.5.3
+     */
+    public Lodestone() { }
+
+    /**
      * Creates and registers a new environment for the given {@link Loaded} interface.
      * <p>
      * This is used to implement custom {@link Loaded} interfaces.

@@ -1,3 +1,16 @@
+# Patch Release 1.5.2
+
+Makes dependency version requirements less strict.
+
+## Content Changes
+
+- Lodestone now runs on 1.18 or later, as long as you have sufficient dependency versions.
+- Added an explicit requirement for any version of `fabric-data-generation-api-v1`.
+- Lodestone now requires any Fabric loader version past 0.4.0.
+- Lodestone now requires at least Java 17 due to the usage of sealed types.
+
+---
+
 # Patch Release 1.5.1
 
 Update to 1.21.1

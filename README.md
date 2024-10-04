@@ -132,7 +132,7 @@ Fabric mod, add the following to your Gradle manifest:
 ```properties
 # gradle.properties
 
-lodestone_version = 1.5.1
+lodestone_version = 1.5.2
 ```
 
 ```groovy
@@ -146,6 +146,10 @@ dependencies {
     modImplementation 'com.github.Jaxydog:Lodestone:${project.lodestone_version}'
 }
 ```
+
+Lodestone *should* work with many older versions of Minecraft, but only the latest game version is guaranteed to have
+proper support. I am currently not interested in backporting to versions prior to roughly 1.18, but if you encounter any
+issues feel free to let me know anyway.
 <!-- modrinth_exclude.start -->
 ### Contributing
 

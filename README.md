@@ -132,7 +132,7 @@ Fabric mod, add the following to your Gradle manifest:
 ```properties
 # gradle.properties
 
-lodestone_version = 1.5.2
+lodestone_version = 1.5.3
 ```
 
 ```groovy

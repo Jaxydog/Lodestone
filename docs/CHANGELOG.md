@@ -7,6 +7,7 @@ Updates Gradle tasks & versions.
 - Modrinth publishing task now sets all versions past 1.18.
 - Updated Gradle to 8.8.
 - Updated Loom to 1.7-SNAPSHOT.
+- Fix JitPack builds.
 
 ### Internal Changes
 

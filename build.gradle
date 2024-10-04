@@ -57,15 +57,24 @@ loom {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version",
+        project.version
 
     filesMatching("fabric.mod.json") { expand "version": project.version }
 }
 
 tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
 tasks.githubRelease.dependsOn(tasks.build)
-tasks.modrinth.dependsOn(tasks.build, tasks.modrinthSyncBody)
-tasks.register("release") { it.dependsOn(tasks.githubRelease, tasks.modrinth) }
+tasks.modrinth.dependsOn(
+    tasks.build,
+    tasks.modrinthSyncBody
+)
+tasks.register("release") {
+    it.dependsOn(
+        tasks.githubRelease,
+        tasks.modrinth
+    )
+}
 
 java {
     withSourcesJar()
@@ -83,7 +92,10 @@ jar {
 
 publishing {
     publications {
-        create("mavenJava", MavenPublication) {
+        create(
+            "mavenJava",
+            MavenPublication
+        ) {
             artifactId = project.archives_base_name
 
             from components.java
@@ -124,15 +136,33 @@ if (System.getenv("MODRINTH_TOKEN") != null) {
 
         versionName = "Lodestone ${project.mod_version}"
         versionType = currentVersionType
-        gameVersions = [project.minecraft_version]
         changelog = currentChangelog
+        gameVersions = [ "1.21.1",
+            "1.21",
+            "1.20.6",
+            "1.20.5",
+            "1.20.4",
+            "1.20.3",
+            "1.20.2",
+            "1.20.1",
+            "1.20",
+            "1.19.4",
+            "1.19.3",
+            "1.19.2",
+            "1.19.1",
+            "1.19",
+            "1.18.2",
+            "1.18.1",
+            "1.18" ]
 
         uploadFile = remapJar
-        additionalFiles = [remapSourcesJar, javadocJar]
+        additionalFiles = [ remapSourcesJar, javadocJar ]
         syncBodyFrom = rootProject.file("README.md").text
         debugMode = project.publish_debug.equalsIgnoreCase("true")
 
-        dependencies {}
+        dependencies {
+            required.project "fabric-api"
+        }
     }
 }
 
@@ -140,9 +170,9 @@ if (System.getenv("MODRINTH_TOKEN") != null) {
 String getCurrentVersionType() {
     final String[] parts = project.mod_version.split("-")
 
-    if (parts.length == 1 || parts[1].matches("release")) return "release"
-    if (parts.length == 2 && parts[1].matches("beta|rc\\d")) return "beta"
-    if (parts.length == 2 && parts[1].matches("alpha")) return "alpha"
+    if (parts.length == 1 || parts[ 1 ].matches("release")) return "release"
+    if (parts.length == 2 && parts[ 1 ].matches("beta|rc\\d")) return "beta"
+    if (parts.length == 2 && parts[ 1 ].matches("alpha")) return "alpha"
 
     throw new IllegalArgumentException("Invalid version number: %s".formatted(project.mod_version))
 }

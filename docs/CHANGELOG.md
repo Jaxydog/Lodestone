@@ -1,3 +1,15 @@
+# Patch Release 1.5.3
+
+Updates Gradle tasks & versions.
+
+### Content Changes
+
+- Modrinth publishing task now sets all versions past 1.18.
+- Updated Gradle to 8.8.
+- Updated Loom to 1.7-SNAPSHOT.
+
+---
+
 # Patch Release 1.5.2
 
 Makes dependency version requirements less strict.

@@ -57,24 +57,15 @@ loom {
 }
 
 processResources {
-    inputs.property "version",
-        project.version
+    inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") { expand "version": project.version }
 }
 
 tasks.withType(JavaCompile).configureEach { it.options.release = 21 }
 tasks.githubRelease.dependsOn(tasks.build)
-tasks.modrinth.dependsOn(
-    tasks.build,
-    tasks.modrinthSyncBody
-)
-tasks.register("release") {
-    it.dependsOn(
-        tasks.githubRelease,
-        tasks.modrinth
-    )
-}
+tasks.modrinth.dependsOn(tasks.build, tasks.modrinthSyncBody)
+tasks.register("release") { it.dependsOn(tasks.githubRelease, tasks.modrinth) }
 
 java {
     withSourcesJar()
@@ -92,10 +83,7 @@ jar {
 
 publishing {
     publications {
-        create(
-            "mavenJava",
-            MavenPublication
-        ) {
+        create("mavenJava", MavenPublication) {
             artifactId = project.archives_base_name
 
             from components.java

@@ -4,7 +4,7 @@ Minor improvements and validation improvements.
 
 ### Content Changes
 
-- Improved the clarity of some log messages.
+- Improved the clarity and consistency of some log messages.
 
 ### Internal Changes
 

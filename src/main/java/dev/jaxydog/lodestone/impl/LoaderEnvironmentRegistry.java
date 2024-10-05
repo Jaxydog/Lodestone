@@ -186,7 +186,7 @@ public final class LoaderEnvironmentRegistry {
         if (this.has(type)) {
             this.entries.get(type).loadEntrypoints(modId);
 
-            LOGGER.debug("Loaded all {} entrypoints for '{}'", type.getSimpleName(), modId);
+            LOGGER.debug("Loaded all '{}' entrypoints for '{}'", type.getSimpleName(), modId);
         } else {
             throw new IllegalArgumentException("An environment has not been registered for '%s'".formatted(type.getSimpleName()));
         }

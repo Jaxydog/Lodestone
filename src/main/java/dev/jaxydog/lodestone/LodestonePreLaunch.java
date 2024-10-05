@@ -18,6 +18,7 @@ import dev.jaxydog.lodestone.api.ClientLoaded;
 import dev.jaxydog.lodestone.api.CommonLoaded;
 import dev.jaxydog.lodestone.api.DataGenerating;
 import dev.jaxydog.lodestone.api.ServerLoaded;
+import dev.jaxydog.lodestone.impl.LoaderEnvironmentRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.impl.datagen.FabricDataGenHelper;
 import net.fabricmc.loader.api.FabricLoader;
@@ -59,6 +60,8 @@ public final class LodestonePreLaunch implements PreLaunchEntrypoint {
                 Lodestone.createEnvironment(DataGenerating.class, DataGenerating::generate);
             }
         }
+
+        LoaderEnvironmentRegistry.FORBID_BUNDLED.set(true);
     }
 
 }

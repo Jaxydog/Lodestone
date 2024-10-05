@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Retains information about all registered loader environments.
@@ -39,6 +40,13 @@ public final class LoaderEnvironmentRegistry {
      * @since 1.1.0
      */
     private static final Logger LOGGER = LoggerFactory.getLogger("Lodestone/Registry");
+    /**
+     * Tracks whether Lodestone has finished initializing bundled environments and should forbid new bundled interfaces
+     * from being loaded.
+     *
+     * @since 1.6.0
+     */
+    public static final AtomicBoolean FORBID_BUNDLED = new AtomicBoolean(false);
 
     /**
      * The environment's entries mapped to their associated {@link Loaded} interfaces.
@@ -76,7 +84,8 @@ public final class LoaderEnvironmentRegistry {
      * @param <T> The type of the associated {@link Loaded} interface.
      *
      * @throws IllegalArgumentException If the given environment's associated {@link Loaded} interface has already been
-     * registered, or if the given environment's associated {@link Loaded} type is not an interface.
+     * registered, or if the given environment's associated {@link Loaded} type is not an interface. This may also be
+     * thrown when attempting to register a new "bundled" environment.
      * @throws NullPointerException If the given environment is null.
      * @since 1.0.0
      */
@@ -92,6 +101,10 @@ public final class LoaderEnvironmentRegistry {
         this.entries.put(type, new Entry<>(environment));
 
         if (environment.isBundled()) {
+            if (FORBID_BUNDLED.get()) {
+                throw new IllegalArgumentException("The environment must not be using a bundled interface.");
+            }
+
             LOGGER.debug("Added bundled loader environment: {}", type.getSimpleName());
         } else {
             LOGGER.debug("Added modded loader environment: {}", type.getSimpleName());

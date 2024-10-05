@@ -1,3 +1,18 @@
+# Minor Release 1.6.0
+
+Minor improvements and validation improvements.
+
+### Content Changes
+
+- Improved the clarity of some log messages.
+
+### Internal Changes
+
+- Minor code style fixes.
+- Custom environments whose interface is annotated with `@BundledLoader` now cause an exception during runtime.
+
+---
+
 # Patch Release 1.5.3
 
 Updates Gradle tasks & versions.

@@ -5,6 +5,7 @@ Minor improvements and validation improvements.
 ### Content Changes
 
 - Improved the clarity and consistency of some log messages.
+- Slightly refactored code examples in the readme.
 
 ### Internal Changes
 

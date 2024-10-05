@@ -24,7 +24,7 @@ public class LoadedItem extends Item implements CommonLoaded {
     // Required for all instances of `Loaded`. Allows Lodestone to group registered values by mod identifier.
     @Override
     public Identifier getLoaderId() {
-        return Identifier.of("your_mod", "your_item");
+        return Identifier.of(YourMod.MOD_ID, "your_item");
     }
 
     // A function that registers the value at runtime.
@@ -41,13 +41,14 @@ Each mod environment has its own dedicated interface:
 - `CommonLoaded` loads the value on the "common" environment, meaning both the client *and* the server.
 - `ClientLoaded` *only* loads the value on the client instance.
 - `ServerLoaded` *only* loads the value on the server instance.
-- `DataGenerating` *only* loads the value during data generation.
+- `DataGenerating` *only* loads the value during Fabric's data generation task.
 
 These are intended to be used within each mod initializer to load it properly.
 
 ```java
 public class YourMod implements ModInitializer {
 
+    public static final String MOD_ID = "your_mod";
     public static final LoadedItem YOUR_ITEM = new LoadedItem(new Settings());
 
     @Override
@@ -56,7 +57,7 @@ public class YourMod implements ModInitializer {
         Lodestone.register(CommonLoaded.class, YOUR_ITEM);
 
         // Which is then done here.
-        Lodestone.load(CommonLoaded.class, "your_mod");
+        Lodestone.load(CommonLoaded.class, MOD_ID);
     }
 
 }
@@ -79,7 +80,7 @@ public final class ItemLoader extends AutoLoader {
 
     @Override
     public Identifier getLoaderId() {
-        return Identifier.of("your_mod", "items");
+        return Identifier.of(YourMod.MOD_ID, "items");
     }
 
 }
@@ -90,6 +91,7 @@ This is then registered in a very similar way.
 ```java
 public class YourMod implements ModInitializer {
 
+    public static final String MOD_ID = "your_mod";
     public static final ItemLoader ITEMS = new ItemLoader();
 
     @Override
@@ -98,7 +100,7 @@ public class YourMod implements ModInitializer {
         ITEMS.register();
 
         // Which is then done here.
-        Lodestone.load(CommonLoaded.class, "your_mod");
+        Lodestone.load(CommonLoaded.class, MOD_ID);
     }
 
 }
@@ -132,7 +134,7 @@ Fabric mod, add the following to your Gradle manifest:
 ```properties
 # gradle.properties
 
-lodestone_version = 1.5.3
+lodestone_version = 1.6.0
 ```
 
 ```groovy

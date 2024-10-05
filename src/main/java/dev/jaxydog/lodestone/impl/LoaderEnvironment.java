@@ -75,7 +75,7 @@ public final class LoaderEnvironment<T extends Loaded> {
      * @since 1.3.0
      */
     public boolean isBundled() {
-        return this.type.isAnnotationPresent(BundledLoader.class);
+        return this.getInterface().isAnnotationPresent(BundledLoader.class);
     }
 
     /**

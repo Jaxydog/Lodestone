@@ -238,19 +238,23 @@ public final class Lodestone implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        final Set<Class<? extends Loaded>> types = getInterfaces();
         final ModContainer mod = FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow();
         final String name = mod.getMetadata().getName();
-
-        if (types.isEmpty()) throw new IllegalStateException("%s initialized without any types".formatted(name));
-
         final String version = mod.getMetadata().getVersion().getFriendlyString();
-        final List<String> bundled = types.stream()
+
+        final List<String> bundled = getInterfaces().stream()
             .filter(c -> c.isAnnotationPresent(BundledLoader.class))
             .map(Class::getSimpleName)
             .toList();
 
-        LOGGER.info("{} {} loaded with {} interfaces: {}", name, version, bundled.size(), String.join(", ", bundled));
+        if (bundled.isEmpty()) {
+            throw new IllegalStateException("%s initialized without any environments".formatted(name));
+        }
+
+        final int count = bundled.size();
+        final String list = String.join(", ", bundled);
+
+        LOGGER.info("{} {} loaded with {} default environments: {}", name, version, count, list);
     }
 
 }

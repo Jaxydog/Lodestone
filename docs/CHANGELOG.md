@@ -1,3 +1,18 @@
+# Patch Release 1.6.1
+
+Adjust internals to fix support for previous game versions.
+
+### Content Changes
+
+- Fix string type used in the readme's dependency example.
+
+### Internal Changes
+
+- Lodestone now only depends on `fabric-data-generation-api-v1` within its Gradle manifest.
+- LodestoneTest no longer depends on `fabric-api`, as it was not used.
+
+---
+
 # Minor Release 1.6.0
 
 Minor improvements and validation improvements.

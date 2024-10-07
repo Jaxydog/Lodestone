@@ -134,7 +134,7 @@ Fabric mod, add the following to your Gradle manifest:
 ```properties
 # gradle.properties
 
-lodestone_version = 1.6.0
+lodestone_version = 1.6.1
 ```
 
 ```groovy
@@ -145,7 +145,7 @@ repositories {
 }
 
 dependencies {
-    modImplementation 'com.github.Jaxydog:Lodestone:${project.lodestone_version}'
+    modImplementation "com.github.Jaxydog:Lodestone:${project.lodestone_version}"
 }
 ```
 

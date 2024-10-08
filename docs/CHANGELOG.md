@@ -5,6 +5,7 @@ Adjust internals to fix support for previous game versions.
 ### Content Changes
 
 - Fix string type used in the readme's dependency example.
+- Add example for using latest commit as a dependency.
 
 ### Internal Changes
 

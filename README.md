@@ -146,6 +146,9 @@ repositories {
 
 dependencies {
     modImplementation "com.github.Jaxydog:Lodestone:${project.lodestone_version}"
+
+    // Or, to alternatively depend on the most recent commit:
+    modImplementation 'com.github.Jaxydog:Lodestone:main-SNAPSHOT'
 }
 ```
 

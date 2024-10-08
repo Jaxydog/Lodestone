@@ -12,6 +12,7 @@ Adjust internals to fix support for previous game versions.
 - Lodestone now only depends on `fabric-data-generation-api-v1` within its Gradle manifest.
 - LodestoneTest no longer depends on `fabric-api`, as it was not used.
 - Fabric API dependency is now compile-only.
+- Bumped Gradle version to 8.9.
 
 ---
 

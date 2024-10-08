@@ -31,7 +31,11 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation(fabricApi.module("fabric-data-generation-api-v1", project.fabric_version))
+
+    final Dependency dataGenerationApi = fabricApi.module('fabric-data-generation-api-v1', project.fabric_version)
+
+    modCompileOnly dataGenerationApi, { exclude group: 'net.fabricmc', module: 'fabric-loader' }
+    modLocalRuntime dataGenerationApi, { exclude group: 'net.fabricmc', module: 'fabric-loader' }
 }
 
 sourceSets {

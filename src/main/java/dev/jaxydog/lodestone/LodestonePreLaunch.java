@@ -20,7 +20,6 @@ import dev.jaxydog.lodestone.api.DataGenerating;
 import dev.jaxydog.lodestone.api.ServerLoaded;
 import dev.jaxydog.lodestone.impl.LoaderEnvironmentRegistry;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.fabric.impl.datagen.FabricDataGenHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -44,7 +43,6 @@ public final class LodestonePreLaunch implements PreLaunchEntrypoint {
      */
     public LodestonePreLaunch() { }
 
-    @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onPreLaunch() {
         Lodestone.LOGGER.info("Initializing basic Lodestone environments");
@@ -56,7 +54,8 @@ public final class LodestonePreLaunch implements PreLaunchEntrypoint {
         } else {
             Lodestone.createEnvironment(ServerLoaded.class, ServerLoaded::loadServer);
 
-            if (FabricDataGenHelper.ENABLED) {
+            // The `fabric-api.datagen` property is used to enable data generation.
+            if (System.getProperty("fabric-api.datagen") != null) {
                 Lodestone.createEnvironment(DataGenerating.class, DataGenerating::generate);
             }
         }

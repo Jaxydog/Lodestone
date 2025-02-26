@@ -1,4 +1,4 @@
-# Patch Release 1.6.1
+# Minor Release 1.7.0
 
 Adjust internals to fix support for previous game versions.
 
@@ -6,13 +6,12 @@ Adjust internals to fix support for previous game versions.
 
 - Fix string type used in the readme's dependency example.
 - Add example for using latest commit as a dependency.
+- Removed the LodestoneTest mod.
 
 ### Internal Changes
 
-- Lodestone now only depends on `fabric-data-generation-api-v1` within its Gradle manifest.
-- LodestoneTest no longer depends on `fabric-api`, as it was not used.
-- Fabric API dependency is now compile-only.
-- Bumped Gradle version to 8.9.
+- Lodestone no longer depends on `fabric-api`.
+- Bumped Gradle version to 8.12.
 
 ---
 

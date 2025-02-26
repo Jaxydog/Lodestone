@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: LGPL-3.0-or-later
  *
- * Copyright © 2024 Jaxydog
+ * Copyright © 2024-2025 Jaxydog
  *
  * This file is part of Lodestone.
  *
@@ -13,7 +13,7 @@
  */
 
 plugins {
-    id "fabric-loom" version "1.7-SNAPSHOT"
+    id "fabric-loom" version "1.10-SNAPSHOT"
     id "maven-publish"
     id "com.modrinth.minotaur" version "2.+"
     id "com.github.breadmoirai.github-release" version "2.+"
@@ -31,33 +31,6 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-    final Dependency dataGenerationApi = fabricApi.module('fabric-data-generation-api-v1', project.fabric_version)
-
-    modCompileOnly dataGenerationApi, { exclude group: 'net.fabricmc', module: 'fabric-loader' }
-    modLocalRuntime dataGenerationApi, { exclude group: 'net.fabricmc', module: 'fabric-loader' }
-}
-
-sourceSets {
-    test {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-    }
-}
-
-loom {
-    runs {
-        testClient {
-            client()
-            name = "Test Client"
-            source sourceSets.test
-        }
-        testServer {
-            server()
-            name = "Test Server"
-            source sourceSets.test
-        }
-    }
 }
 
 processResources {
@@ -129,7 +102,10 @@ if (System.getenv("MODRINTH_TOKEN") != null) {
         versionName = "Lodestone ${project.mod_version}"
         versionType = currentVersionType
         changelog = currentChangelog
-        gameVersions = [ "1.21.1",
+        gameVersions = [ "1.21.4",
+            "1.21.3",
+            "1.21.2",
+            "1.21.1",
             "1.21",
             "1.20.6",
             "1.20.5",

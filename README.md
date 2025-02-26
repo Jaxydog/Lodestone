@@ -13,7 +13,7 @@ you [add it as a dependency for your mod](#depending-on-lodestone). This mod doe
 
 Lodestone provides basic interfaces and APIs for easily registering modded content during initialization. The most
 important type provided is the `Loaded` interface, which the mod is built around. For a basic example, see the
-basic [test mod](https://github.com/Jaxydog/Lodestone/tree/main/src/test).
+[Cheese mod](https://github.com/Jaxydog/Cheese).
 
 To create an automatically registered type, simply implement the target environment's associated interface.
 

@@ -1,3 +1,14 @@
+# Patch Release 1.7.1
+
+Fix the way that the library determines whether data generation is enabled.
+
+### Internal Changes
+
+- No longer assume that data generation can only happen server-side.
+- Check whether the `fabric-api.datagen` property exists at all, not just that it's non-null.
+
+---
+
 # Minor Release 1.7.0
 
 Adjust internals to fix support for previous game versions.

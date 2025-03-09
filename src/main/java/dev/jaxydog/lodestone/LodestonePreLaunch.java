@@ -53,11 +53,11 @@ public final class LodestonePreLaunch implements PreLaunchEntrypoint {
             Lodestone.createEnvironment(ClientLoaded.class, ClientLoaded::loadClient);
         } else {
             Lodestone.createEnvironment(ServerLoaded.class, ServerLoaded::loadServer);
+        }
 
-            // The `fabric-api.datagen` property is used to enable data generation.
-            if (System.getProperty("fabric-api.datagen") != null) {
-                Lodestone.createEnvironment(DataGenerating.class, DataGenerating::generate);
-            }
+        // The `fabric-api.datagen` property is used to enable data generation.
+        if (System.getProperties().containsKey("fabric-api.datagen")) {
+            Lodestone.createEnvironment(DataGenerating.class, DataGenerating::generate);
         }
 
         LoaderEnvironmentRegistry.FORBID_BUNDLED.set(true);

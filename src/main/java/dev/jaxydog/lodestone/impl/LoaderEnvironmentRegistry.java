@@ -5,11 +5,16 @@
  *
  * This file is part of Lodestone.
  *
- * Lodestone is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * Lodestone is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
- * Lodestone is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Lodestone is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along with Lodestone. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License along with Lodestone. If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 package dev.jaxydog.lodestone.impl;
@@ -89,7 +94,9 @@ public final class LoaderEnvironmentRegistry {
      * @throws NullPointerException If the given environment is null.
      * @since 1.0.0
      */
-    public <T extends Loaded> void register(LoaderEnvironment<T> environment) throws IllegalArgumentException, NullPointerException {
+    public <T extends Loaded> void register(LoaderEnvironment<T> environment)
+        throws IllegalArgumentException, NullPointerException
+    {
         final Class<? extends T> type = Objects.requireNonNull(environment).getInterface();
 
         if (!type.isInterface()) {
@@ -152,7 +159,9 @@ public final class LoaderEnvironmentRegistry {
     @SuppressWarnings("unchecked")
     public <T extends Loaded> void addEntrypoint(
         Class<? extends T> type, T entrypoint
-    ) throws IllegalArgumentException, NullPointerException {
+    )
+        throws IllegalArgumentException, NullPointerException
+    {
         Objects.requireNonNull(entrypoint);
 
         if (this.has(type)) {
@@ -182,7 +191,9 @@ public final class LoaderEnvironmentRegistry {
      */
     public <T extends Loaded> void loadEntrypoints(
         Class<? extends T> type, String modId
-    ) throws IllegalArgumentException {
+    )
+        throws IllegalArgumentException
+    {
         if (this.has(type)) {
             this.entries.get(type).loadEntrypoints(modId);
 

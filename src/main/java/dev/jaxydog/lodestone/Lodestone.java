@@ -5,11 +5,16 @@
  *
  * This file is part of Lodestone.
  *
- * Lodestone is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * Lodestone is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
- * Lodestone is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Lodestone is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along with Lodestone. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License along with Lodestone. If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 package dev.jaxydog.lodestone;
@@ -38,7 +43,9 @@ import java.util.function.Consumer;
  * @since 1.0.0
  */
 @SuppressWarnings("unused") // These are API methods.
-public final class Lodestone implements ModInitializer {
+public final class Lodestone
+    implements ModInitializer
+{
 
     /**
      * Lodestone's mod identifier.
@@ -65,7 +72,8 @@ public final class Lodestone implements ModInitializer {
      *
      * @since 1.5.3
      */
-    public Lodestone() { }
+    public Lodestone() {
+    }
 
     /**
      * Creates and registers a new environment for the given {@link Loaded} interface.
@@ -188,7 +196,9 @@ public final class Lodestone implements ModInitializer {
      */
     public static <T extends Loaded> void load(
         Class<? extends T> type, String... modIds
-    ) throws IllegalArgumentException {
+    )
+        throws IllegalArgumentException
+    {
         if (modIds.length == 0) {
             throw new IllegalArgumentException("At least one mod identifier must be supplied during loading");
         }
@@ -208,7 +218,9 @@ public final class Lodestone implements ModInitializer {
      */
     public static <T extends Loaded> void load(
         Class<? extends T> type, Iterator<String> modIds
-    ) throws IllegalArgumentException {
+    )
+        throws IllegalArgumentException
+    {
         if (!modIds.hasNext()) {
             throw new IllegalArgumentException("At least one mod identifier must be supplied during loading");
         }
@@ -228,7 +240,9 @@ public final class Lodestone implements ModInitializer {
      */
     public static <T extends Loaded> void load(
         Class<? extends T> type, Collection<String> modIds
-    ) throws IllegalArgumentException {
+    )
+        throws IllegalArgumentException
+    {
         if (modIds.isEmpty()) {
             throw new IllegalArgumentException("At least one mod identifier must be supplied during loading");
         }

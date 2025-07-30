@@ -138,6 +138,8 @@ if (System.getenv("MODRINTH_TOKEN") != null) {
         additionalFiles = [remapSourcesJar, javadocJar]
         syncBodyFrom = rootProject.file("README.md").text
         debugMode = project.publish_debug.equalsIgnoreCase("true")
+
+        dependencies {}
     }
 }
 

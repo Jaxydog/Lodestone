@@ -5,11 +5,16 @@
  *
  * This file is part of Lodestone.
  *
- * Lodestone is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * Lodestone is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General
+ * Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
- * Lodestone is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+ * Lodestone is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for
+ * more details.
  *
- * You should have received a copy of the GNU Lesser General Public License along with Lodestone. If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License along with Lodestone. If not, see
+ * <https://www.gnu.org/licenses/>.
  */
 
 package dev.jaxydog.lodestone.api;
@@ -35,7 +40,9 @@ import java.util.function.BiConsumer;
  * @author Jaxydog
  * @since 1.0.0
  */
-public abstract class AutoLoader implements Loaded {
+public abstract class AutoLoader
+    implements Loaded
+{
 
     /**
      * A comparator that sorts fields by their annotated loading priority.
@@ -95,6 +102,18 @@ public abstract class AutoLoader implements Loaded {
 
                     this.logger.error("Unable to access loader '{}#{}': {}", className, fieldName, message);
                 }
+            } else if (AutoLoaded.class.isAssignableFrom(field.getType())) {
+                try {
+                    final AutoLoaded<?> wrapper = (AutoLoaded<?>) field.get(null);
+
+                    wrapper.getBoundLoadMethods(type).ifPresent(list -> list.forEach(Runnable::run));
+                } catch (IllegalAccessException | IllegalArgumentException exception) {
+                    final String className = this.getClass().getSimpleName();
+                    final String fieldName = field.getName();
+                    final String message = exception.getLocalizedMessage();
+
+                    this.logger.error("Unable to access wrapper '{}#{}': {}", className, fieldName, message);
+                }
             }
 
             // Ensure the field is an instance of the given type.
@@ -121,16 +140,19 @@ public abstract class AutoLoader implements Loaded {
      * @since 1.0.0
      */
     public <T extends Loaded> void register(Class<? extends T> type) {
-        this.iterate(type, (field, value) -> {
-            try {
-                Lodestone.register(type, value);
-            } catch (NullPointerException exception) {
-                final String className = this.getClass().getSimpleName();
-                final String fieldName = field.getName();
+        this.iterate(
+            type,
+            (field, value) -> {
+                try {
+                    Lodestone.register(type, value);
+                } catch (NullPointerException exception) {
+                    final String className = this.getClass().getSimpleName();
+                    final String fieldName = field.getName();
 
-                this.logger.error("Attempted to register '{}#{}' with a null value", className, fieldName);
+                    this.logger.error("Attempted to register '{}#{}' with a null value", className, fieldName);
+                }
             }
-        });
+        );
     }
 
     /**

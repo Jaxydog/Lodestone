@@ -1,3 +1,13 @@
+# Minor Release 1.8.0
+
+Create an additional class for usage with `AutoLoaders`.
+
+### Content Changes
+
+- Adds the `AutoLoaded` class; a wrapper that provides an API for applying load functions to generic types.
+
+---
+
 # Patch Release 1.7.1
 
 Fix the way that the library determines whether data generation is enabled.

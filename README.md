@@ -143,7 +143,7 @@ add the following to your Gradle manifest:
 ```properties
 # gradle.properties
 
-lodestone_version = 1.7.1
+lodestone_version = 1.8.0
 ```
 
 ```groovy
